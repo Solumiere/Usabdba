@@ -11,6 +11,14 @@ use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
 {
+    // День 10 — история заказов текущего покупателя
+    public function index()
+    {
+        $orders = Auth::user()->orders()->orderByDesc('created_at')->paginate(15);
+
+        return view('orders.index', compact('orders'));
+    }
+
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -74,5 +82,32 @@ class OrderController extends Controller
         $order->load('items.game');
 
         return view('orders.show', compact('order'));
+    }
+
+    // День 10 — квитанция в PDF через TCPDF
+    public function receipt(Order $order)
+    {
+        abort_unless($order->users_id === Auth::id(), 403);
+        $order->load('items.game');
+
+        $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8');
+        $pdf->SetCreator('GameStore');
+        $pdf->SetTitle('Квитанция #'.$order->id);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->AddPage();
+        $pdf->SetFont('dejavusans', '', 11); // юникод-шрифт для кириллицы
+
+        $html = view('orders.receipt', compact('order'))->render();
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        return response(
+            $pdf->Output('receipt-'.$order->id.'.pdf', 'S'),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="receipt-'.$order->id.'.pdf"',
+            ]
+        );
     }
 }

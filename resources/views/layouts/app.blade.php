@@ -14,6 +14,7 @@
     <ul class="navbar-nav ms-auto">
       @auth
         <li class="nav-item"><a class="nav-link" href="<?= route('wishlist.index') ?>">Желаемое</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?= route('orders.index') ?>">Заказы</a></li>
         <li class="nav-item"><a class="nav-link" href="<?= route('cart.index') ?>">Корзина</a></li>
         <li class="nav-item"><span class="nav-link text-white-50"><?= e(auth()->user()->email) ?></span></li>
         <li class="nav-item">

@@ -18,8 +18,9 @@
     </tbody>
   </table>
   <strong class="fs-5">Итого: <?= number_format($order->total_price, 2, ',', ' ') ?> ₽</strong>
-  <div class="mt-3">
-    <a href="<?= route('catalog.index') ?>" class="btn btn-outline-primary">В каталог</a>
+  <div class="mt-3 d-flex gap-2">
+    <a href="<?= route('orders.receipt', $order) ?>" class="btn btn-outline-secondary">Скачать квитанцию PDF</a>
+    <a href="<?= route('orders.index') ?>" class="btn btn-outline-primary">К моим заказам</a>
   </div>
 </div>
 @endsection

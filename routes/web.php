@@ -29,7 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/wishlist/{game}', [WishlistController::class, 'add'])->name('wishlist.add');
     Route::delete('/wishlist/{wishlist}', [WishlistController::class, 'remove'])->name('wishlist.remove');
 
-    // День 9 — оформление заказа
+    // День 9 — оформление заказа; День 10 — история + квитанция
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/receipt', [OrderController::class, 'receipt'])->name('orders.receipt');
 });
