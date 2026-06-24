@@ -2,6 +2,7 @@
 @section('title', 'Корзина')
 @section('content')
 <h1 class="h4 mb-3">Корзина</h1>
+@error('cart')<div class="alert alert-danger"><?= e($message) ?></div>@enderror
 @if ($items->isEmpty())
   <p>Корзина пуста.</p>
 @else
@@ -32,7 +33,9 @@
   </table>
   <div class="d-flex justify-content-between align-items-center">
     <strong class="fs-5">Итого: <?= number_format($total, 2, ',', ' ') ?> ₽</strong>
-    <button class="btn btn-success" disabled>Оформить заказ (День 9)</button>
+    <form method="POST" action="<?= route('orders.store') ?>">@csrf
+      <button class="btn btn-success">Оформить заказ</button>
+    </form>
   </div>
 @endif
 @endsection
