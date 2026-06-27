@@ -1,41 +1,59 @@
 @extends('layouts.app')
-@section('title', 'Корзина')
+
 @section('content')
-<h1 class="h4 mb-3">Корзина</h1>
-@error('cart')<div class="alert alert-danger"><?= e($message) ?></div>@enderror
+<h1 class="section-title">Корзина</h1>
+
 @if ($items->isEmpty())
-  <p>Корзина пуста.</p>
+    <div class="empty-state">
+        <i class="bi bi-cart-x"></i>
+        <p>Корзина пуста.</p>
+        <a href="<?= route('catalog.index') ?>" class="btn btn-buy">В каталог</a>
+    </div>
 @else
-  <table class="table align-middle bg-white">
-    <thead><tr><th>Игра</th><th>Цена</th><th>Кол-во</th><th>Сумма</th><th></th></tr></thead>
-    <tbody>
-    @foreach ($items as $item)
-      <tr>
-        <td><?= e($item->game->title) ?></td>
-        <td><?= number_format($item->game->price, 2, ',', ' ') ?> ₽</td>
-        <td>
-          <form method="POST" action="<?= route('cart.update', $item) ?>" class="d-flex gap-1">
-            @csrf @method('PATCH')
-            <input type="number" name="quantity" value="<?= (int) $item->quantity ?>" min="1" max="99" class="form-control form-control-sm" style="width:80px">
-            <button class="btn btn-sm btn-outline-secondary">OK</button>
-          </form>
-        </td>
-        <td><?= number_format($item->quantity * $item->game->price, 2, ',', ' ') ?> ₽</td>
-        <td>
-          <form method="POST" action="<?= route('cart.remove', $item) ?>">
-            @csrf @method('DELETE')
-            <button class="btn btn-sm btn-outline-danger">Удалить</button>
-          </form>
-        </td>
-      </tr>
-    @endforeach
-    </tbody>
-  </table>
-  <div class="d-flex justify-content-between align-items-center">
-    <strong class="fs-5">Итого: <?= number_format($total, 2, ',', ' ') ?> ₽</strong>
-    <form method="POST" action="<?= route('orders.store') ?>">@csrf
-      <button class="btn btn-success">Оформить заказ</button>
-    </form>
-  </div>
+    <div class="card app-card">
+        <div class="table-responsive">
+            <table class="table table-dark table-borderless align-middle mb-0">
+                <thead><tr><th>Игра</th><th>Цена</th><th style="width:150px">Кол-во</th><th>Сумма</th><th></th></tr></thead>
+                <tbody>
+                    @foreach ($items as $item)
+                        <tr>
+                            <td>
+                                <a href="<?= route('catalog.show', $item->game) ?>" class="game-title"><?= e($item->game->title) ?></a>
+                                <div class="text-muted small"><?= e($item->game->genre) ?></div>
+                            </td>
+                            <td><?= number_format($item->game->price, 0, ',', ' ') ?> ₽</td>
+                            <td>
+                                <form action="<?= route('cart.update', $item) ?>" method="POST" class="d-flex gap-1">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="number" name="quantity" value="<?= (int) $item->quantity ?>" min="1" max="<?= (int) $item->game->stock ?>" class="form-control form-control-sm">
+                                    <button class="btn btn-sm btn-outline-light" type="submit"><i class="bi bi-arrow-repeat"></i></button>
+                                </form>
+                            </td>
+                            <td><?= number_format($item->game->price * $item->quantity, 0, ',', ' ') ?> ₽</td>
+                            <td>
+                                <form action="<?= route('cart.remove', $item) ?>" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+        <span class="price-lg">Итого: <?= number_format($total, 0, ',', ' ') ?> ₽</span>
+        <form action="<?= route('orders.store') ?>" method="POST">
+            @csrf
+            <button class="btn btn-buy btn-lg" type="submit">Оформить заказ</button>
+        </form>
+    </div>
+    @error('cart')
+        <div class="alert alert-danger mt-2"><?= e($message) ?></div>
+    @enderror
 @endif
 @endsection

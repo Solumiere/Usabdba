@@ -11,6 +11,10 @@ class User extends Authenticatable
     protected $fillable = ['email', 'password_hash', 'role'];
     protected $hidden = ['password_hash'];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
     // Laravel по умолчанию ищет поле password — указываем наше
     public function getAuthPassword(): string
     {

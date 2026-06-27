@@ -1,28 +1,41 @@
 @extends('layouts.app')
-@section('title', 'Список желаемого')
+
 @section('content')
-<h1 class="h4 mb-3">Список желаемого</h1>
+<h1 class="section-title">Желаемое</h1>
+
 @if ($items->isEmpty())
-  <p>Список пуст.</p>
+    <div class="empty-state">
+        <i class="bi bi-heart"></i>
+        <p>В списке желаемого пока пусто.</p>
+        <a href="<?= route('catalog.index') ?>" class="btn btn-buy">В каталог</a>
+    </div>
 @else
-  <div class="row g-3">
-    @foreach ($items as $item)
-      <div class="col-sm-6 col-lg-4">
-        <div class="card h-100"><div class="card-body d-flex flex-column">
-          <h5 class="card-title"><?= e($item->game->title) ?></h5>
-          <p class="fw-bold"><?= number_format($item->game->price, 2, ',', ' ') ?> ₽</p>
-          <div class="mt-auto d-flex gap-2">
-            <form method="POST" action="<?= route('cart.add', $item->game) ?>">@csrf
-              <button class="btn btn-sm btn-primary">В корзину</button>
-            </form>
-            <form method="POST" action="<?= route('wishlist.remove', $item) ?>">
-              @csrf @method('DELETE')
-              <button class="btn btn-sm btn-outline-danger">Убрать</button>
-            </form>
-          </div>
-        </div></div>
-      </div>
-    @endforeach
-  </div>
+    <div class="row g-3">
+        @foreach ($items as $item)
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="game-card">
+                    <a href="<?= route('catalog.show', $item->game) ?>" class="game-cover" style="background:linear-gradient(135deg,#2b5876,#4e4376);">
+                        <span class="badge-genre"><?= e($item->game->genre) ?></span>
+                        <span class="game-cover-title"><?= e($item->game->title) ?></span>
+                    </a>
+                    <div class="game-body">
+                        <a href="<?= route('catalog.show', $item->game) ?>" class="game-title"><?= e($item->game->title) ?></a>
+                        <div class="game-meta"><span class="price"><?= number_format($item->game->price, 0, ',', ' ') ?> ₽</span></div>
+                        <div class="d-flex gap-1 mt-2">
+                            <form action="<?= route('cart.add', $item->game) ?>" method="POST" class="flex-grow-1">
+                                @csrf
+                                <button class="btn btn-buy w-100 btn-sm" type="submit">В корзину</button>
+                            </form>
+                            <form action="<?= route('wishlist.remove', $item) ?>" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-outline-danger btn-sm" type="submit"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 @endif
 @endsection

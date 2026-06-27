@@ -9,30 +9,25 @@ class CatalogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Game::query()->visible();
+        $query = Game::visible();
 
-        if ($search = $request->input('search')) {
-            $query->where('title', 'like', '%'.$search.'%'); // параметризовано Eloquent'ом
+        // Поиск по названию (параметризованный запрос)
+        if ($q = trim((string) $request->input('q'))) {
+            $query->where('title', 'like', '%'.$q.'%');
         }
+
+        // Фильтр по жанру
         if ($genre = $request->input('genre')) {
             $query->where('genre', $genre);
         }
-        if ($request->filled('min_price')) {
-            $query->where('price', '>=', (float) $request->input('min_price'));
-        }
-        if ($request->filled('max_price')) {
-            $query->where('price', '<=', (float) $request->input('max_price'));
-        }
 
-        match ($request->input('sort')) {
-            'price_asc' => $query->orderBy('price'),
-            'price_desc' => $query->orderByDesc('price'),
-            'title' => $query->orderBy('title'),
-            default => $query->orderByDesc('created_at'),
-        };
+        $games = $query->orderByDesc('created_at')->paginate(12)->withQueryString();
 
-        $games = $query->paginate(12)->withQueryString();
-        $genres = Game::visible()->select('genre')->distinct()->orderBy('genre')->pluck('genre');
+        $genres = Game::visible()
+            ->select('genre')
+            ->distinct()
+            ->orderBy('genre')
+            ->pluck('genre');
 
         return view('catalog.index', compact('games', 'genres'));
     }

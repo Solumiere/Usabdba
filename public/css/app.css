@@ -1,0 +1,98 @@
+:root{
+  --bg:#0e0f13;
+  --surface:#16181f;
+  --surface-2:#1d2029;
+  --border:#262a35;
+  --text:#e9eaf0;
+  --muted:#9aa0ad;
+  --accent:#e4002b;
+  --accent-hover:#ff1f47;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--accent-hover)}
+main{flex:1 0 auto}
+.text-muted{color:var(--muted)!important}
+
+/* Шапка */
+.app-nav{position:sticky;top:0;z-index:1030;background:rgba(14,15,19,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.app-nav-inner{display:flex;align-items:center;gap:16px;padding:12px 0}
+.brand{font-weight:800;font-size:22px;letter-spacing:1px;white-space:nowrap}
+.brand-badge{background:var(--accent);color:#fff;padding:3px 8px;border-radius:8px}
+.brand-text{color:var(--text)}
+.btn-catalog{background:var(--accent);color:#fff;border:none;border-radius:999px;font-weight:700;padding:8px 18px;white-space:nowrap}
+.btn-catalog:hover{background:var(--accent-hover);color:#fff}
+.search{flex:1;display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:6px 16px;max-width:520px;margin:0 auto}
+.search i{color:var(--muted)}
+.search input{flex:1;background:transparent;border:none;color:var(--text);outline:none}
+.search input::placeholder{color:var(--muted)}
+.app-actions{display:flex;align-items:center;gap:14px;white-space:nowrap}
+.icon-link{font-size:20px;color:var(--text);background:none;border:none;display:flex;align-items:center}
+.icon-link:hover{color:var(--accent)}
+.btn-login{background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:999px;font-weight:700;padding:6px 16px}
+.btn-login:hover{background:var(--accent);color:#fff}
+
+/* Кнопки */
+.btn-buy{background:var(--accent);color:#fff;border:none;border-radius:999px;font-weight:700}
+.btn-buy:hover{background:var(--accent-hover);color:#fff}
+.btn-outline-light{border-radius:999px}
+.btn-outline-danger{border-radius:999px}
+
+/* Герой-баннер */
+.hero{position:relative;border-radius:24px;padding:56px 40px;background:radial-gradient(120% 140% at 80% 0,#3a0d1a 0,#16181f 55%,#0e0f13 100%);border:1px solid var(--border);overflow:hidden}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(228,0,43,.35),transparent 70%);filter:blur(10px)}
+.hero-content{position:relative;max-width:640px}
+.hero-eyebrow{color:var(--accent);font-weight:700;letter-spacing:2px;font-size:13px}
+.hero-title{font-size:44px;font-weight:800;line-height:1.1;margin:10px 0 14px}
+.hero-sub{color:var(--muted);font-size:17px;margin-bottom:22px}
+
+.section-title{font-size:26px;font-weight:800;margin-bottom:8px}
+.filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Карточки игр */
+.game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;height:100%;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.game-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.game-cover{position:relative;display:flex;align-items:flex-end;aspect-ratio:3/4;padding:14px;color:#fff}
+.game-cover-lg{aspect-ratio:4/3;border-radius:var(--radius)}
+.game-cover-title{font-weight:800;font-size:20px;text-shadow:0 2px 12px rgba(0,0,0,.5);line-height:1.15}
+.badge-genre{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600}
+.game-body{padding:14px;display:flex;flex-direction:column;flex:1}
+.game-title{font-weight:700;color:var(--text)}
+.game-meta{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.price{color:#fff;font-weight:800}
+.price-lg{font-size:28px;font-weight:800;color:#fff}
+.stock-ok{color:#38ef7d;font-size:13px;font-weight:600}
+.stock-no{color:var(--muted);font-size:13px}
+.detail-title{font-size:34px;font-weight:800}
+.detail-desc{color:var(--muted);font-size:16px;line-height:1.6}
+
+/* Карточки/формы */
+.app-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.card{background:var(--surface);border:1px solid var(--border)}
+.form-control,.form-select{background:var(--surface-2);border:1px solid var(--border);color:var(--text)}
+.form-control:focus,.form-select:focus{background:var(--surface-2);border-color:var(--accent);color:var(--text);box-shadow:0 0 0 .2rem rgba(228,0,43,.25)}
+.form-control::placeholder{color:var(--muted)}
+table.table-dark{--bs-table-bg:transparent}
+
+.auth-wrap{max-width:440px;margin:40px auto}
+.auth-card{padding:32px}
+
+/* Статусы */
+.badge.status-pending{background:#3a2f00;color:#ffd200;border:1px solid #6b5600}
+.badge.status-paid{background:#0c3a1d;color:#38ef7d;border:1px solid #14743a}
+.badge.status-cancelled{background:#3a0d14;color:#ff6b81;border:1px solid #7a1c2c}
+
+/* Пустое состояние */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state i{font-size:48px;display:block;margin-bottom:12px;opacity:.6}
+
+/* Админ-навигация */
+.admin-nav{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.admin-nav a{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 16px;font-weight:600;color:var(--muted)}
+.admin-nav a.active,.admin-nav a:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Подвал */
+.app-footer{flex-shrink:0;border-top:1px solid var(--border);padding:24px 0;color:var(--muted);font-size:14px;text-align:center;margin-top:40px}
+.pagination{--bs-pagination-bg:var(--surface);--bs-pagination-border-color:var(--border);--bs-pagination-color:var(--text);--bs-pagination-active-bg:var(--accent);--bs-pagination-active-border-color:var(--accent);--bs-pagination-hover-bg:var(--surface-2);--bs-pagination-hover-color:var(--text)}

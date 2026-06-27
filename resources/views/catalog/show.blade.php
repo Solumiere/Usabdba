@@ -1,23 +1,46 @@
 @extends('layouts.app')
-@section('title', $game->title)
+
 @section('content')
-<div class="card card-body">
-  <h1 class="h3"><?= e($game->title) ?></h1>
-  <p class="text-muted"><?= e($game->genre) ?></p>
-  <p><?= e($game->description) ?></p>
-  <p class="fs-4 fw-bold"><?= number_format($game->price, 2, ',', ' ') ?> ₽</p>
-  <p class="small text-muted">В наличии: <?= (int) $game->stock ?></p>
-  @auth
-    <div class="d-flex gap-2">
-      <form method="POST" action="<?= route('cart.add', $game) ?>">@csrf
-        <button class="btn btn-primary">В корзину</button>
-      </form>
-      <form method="POST" action="<?= route('wishlist.add', $game) ?>">@csrf
-        <button class="btn btn-outline-secondary">В желаемое</button>
-      </form>
+@php
+    $palette = [['#7b2ff7','#f107a3'],['#11998e','#38ef7d'],['#e4002b','#ff7e5f'],['#2b5876','#4e4376'],['#f7971e','#ffd200'],['#373b44','#4286f4']];
+    $pair = $palette[$game->id % count($palette)];
+@endphp
+
+<a href="<?= route('catalog.index') ?>" class="text-muted small"><i class="bi bi-arrow-left"></i> К каталогу</a>
+
+<div class="row g-4 mt-1">
+    <div class="col-md-5">
+        <div class="game-cover game-cover-lg" style="background:linear-gradient(135deg, <?= $pair[0] ?>, <?= $pair[1] ?>);">
+            <span class="badge-genre"><?= e($game->genre) ?></span>
+            <span class="game-cover-title"><?= e($game->title) ?></span>
+        </div>
     </div>
-  @else
-    <a href="<?= route('login') ?>" class="btn btn-primary">Войдите, чтобы купить</a>
-  @endauth
+    <div class="col-md-7">
+        <h1 class="detail-title"><?= e($game->title) ?></h1>
+        <div class="mb-3">
+            <span class="badge text-bg-secondary"><?= e($game->genre) ?></span>
+            @if ($game->stock > 0)
+                <span class="badge status-paid">В наличии: <?= (int) $game->stock ?></span>
+            @else
+                <span class="badge status-cancelled">Нет в наличии</span>
+            @endif
+        </div>
+        <p class="detail-desc"><?= nl2br(e($game->description)) ?></p>
+        <div class="price-lg mb-3"><?= number_format($game->price, 0, ',', ' ') ?> ₽</div>
+        <div class="d-flex gap-2 flex-wrap">
+            @if ($game->stock > 0)
+                <form action="<?= route('cart.add', $game) ?>" method="POST">
+                    @csrf
+                    <button class="btn btn-buy btn-lg" type="submit"><i class="bi bi-cart-plus"></i> Купить</button>
+                </form>
+            @else
+                <button class="btn btn-secondary btn-lg" disabled>Нет в наличии</button>
+            @endif
+            <form action="<?= route('wishlist.add', $game) ?>" method="POST">
+                @csrf
+                <button class="btn btn-outline-light btn-lg" type="submit"><i class="bi bi-heart"></i></button>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
