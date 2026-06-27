@@ -15,11 +15,10 @@
             @php $hasImg = !empty($item->game->image); @endphp
             <div class="col-6 col-md-4 col-lg-3">
                 <div class="game-card">
-                    <a href="<?= route('catalog.show', $item->game) ?>" class="game-cover <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$item->game->image))."')" : 'background:linear-gradient(135deg,#2b5876,#4e4376)' ?>;">
-                        <span class="badge-genre"><?= e($item->game->genre) ?></span>
-                    </a>
+                    <a href="<?= route('catalog.show', $item->game) ?>" class="game-cover <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$item->game->image))."')" : 'background:linear-gradient(135deg,#2b5876,#4e4376)' ?>;"></a>
                     <div class="game-body">
                         <a href="<?= route('catalog.show', $item->game) ?>" class="game-title"><?= e($item->game->title) ?></a>
+                        <span class="genre-tag"><?= e($item->game->genre) ?></span>
                         <div class="game-meta"><span class="price"><?= number_format($item->game->price, 0, ',', ' ') ?> ₽</span></div>
                         <div class="d-flex gap-1 mt-2">
                             <form action="<?= route('cart.add', $item->game) ?>" method="POST" class="flex-grow-1">

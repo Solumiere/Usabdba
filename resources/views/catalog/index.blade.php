@@ -43,11 +43,10 @@
         @php $hasImg = !empty($game->image); @endphp
         <div class="col-6 col-md-4 col-lg-3">
             <div class="game-card">
-                <a href="<?= route('catalog.show', $game) ?>" class="game-cover <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$game->image))."')" : 'background:'.$cover($game) ?>;">
-                    <span class="badge-genre"><?= e($game->genre) ?></span>
-                </a>
+                <a href="<?= route('catalog.show', $game) ?>" class="game-cover <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$game->image))."')" : 'background:'.$cover($game) ?>;"></a>
                 <div class="game-body">
                     <a href="<?= route('catalog.show', $game) ?>" class="game-title"><?= e($game->title) ?></a>
+                    <span class="genre-tag"><?= e($game->genre) ?></span>
                     <div class="game-meta">
                         <span class="price"><?= number_format($game->price, 0, ',', ' ') ?> ₽</span>
                         @if ($game->stock > 0)

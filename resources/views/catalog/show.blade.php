@@ -11,9 +11,7 @@
 
 <div class="row g-4 mt-1">
     <div class="col-md-5">
-        <div class="game-cover game-cover-lg <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$game->image))."')" : 'background:linear-gradient(135deg, '.$pair[0].', '.$pair[1].')' ?>;">
-            <span class="badge-genre"><?= e($game->genre) ?></span>
-        </div>
+        <div class="game-cover game-cover-lg <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$game->image))."')" : 'background:linear-gradient(135deg, '.$pair[0].', '.$pair[1].')' ?>;"></div>
     </div>
     <div class="col-md-7">
         <h1 class="detail-title"><?= e($game->title) ?></h1>
