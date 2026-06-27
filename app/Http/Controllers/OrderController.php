@@ -90,13 +90,25 @@ class OrderController extends Controller
         abort_unless($order->users_id === Auth::id(), 403);
         $order->load('items.game');
 
+        // Гарантируем, что TCPDF найдёт встроенные шрифты
+        if (! defined('K_PATH_FONTS')) {
+            define('K_PATH_FONTS', base_path('vendor/tecnickcom/tcpdf/fonts').'/');
+        }
+
         $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8');
         $pdf->SetCreator('GameStore');
         $pdf->SetTitle('Квитанция #'.$order->id);
+
+        // Отключаем колонтитулы и переводим ВСЕ шрифты на юникодный dejavusans,
+        // чтобы TCPDF не пытался загрузить helvetica (ошибка "unable to read file: helvetica")
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
-        $pdf->AddPage();
+        $pdf->setHeaderFont(['dejavusans', '', 10]);
+        $pdf->setFooterFont(['dejavusans', '', 8]);
+        $pdf->SetDefaultMonospacedFont('dejavusans');
         $pdf->SetFont('dejavusans', '', 11); // юникод-шрифт для кириллицы
+
+        $pdf->AddPage();
 
         $html = view('orders.receipt', compact('order'))->render();
         $pdf->writeHTML($html, true, false, true, false, '');

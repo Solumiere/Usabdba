@@ -8,7 +8,7 @@ class Game extends Model
 {
     public $timestamps = false;
 
-    protected $fillable = ['title', 'description', 'price', 'genre', 'stock', 'is_hidden'];
+    protected $fillable = ['title', 'description', 'price', 'genre', 'image', 'stock', 'is_hidden'];
 
     protected $casts = [
         'is_hidden' => 'boolean',
