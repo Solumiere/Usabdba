@@ -4,7 +4,7 @@
 @include('admin._nav')
 <h1 class="section-title">Редактировать: <?= e($game->title) ?></h1>
 <div class="card app-card">
-    <form action="<?= route('admin.games.update', $game) ?>" method="POST">
+    <form action="<?= route('admin.games.update', $game) ?>" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         @include('admin.games._form')

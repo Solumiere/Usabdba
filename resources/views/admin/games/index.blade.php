@@ -14,7 +14,12 @@
             <tbody>
                 @foreach ($games as $game)
                     <tr>
-                        <td><?= e($game->title) ?></td>
+                        <td>
+                            @if (!empty($game->image))
+                                <img src="<?= asset('storage/'.$game->image) ?>" alt="" class="admin-thumb">
+                            @endif
+                            <?= e($game->title) ?>
+                        </td>
                         <td><?= e($game->genre) ?></td>
                         <td><?= number_format($game->price, 0, ',', ' ') ?> ₽</td>
                         <td><?= (int) $game->stock ?></td>

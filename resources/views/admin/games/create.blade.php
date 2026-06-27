@@ -4,7 +4,7 @@
 @include('admin._nav')
 <h1 class="section-title">Новая игра</h1>
 <div class="card app-card">
-    <form action="<?= route('admin.games.store') ?>" method="POST">
+    <form action="<?= route('admin.games.store') ?>" method="POST" enctype="multipart/form-data">
         @csrf
         @include('admin.games._form')
         <div class="mt-4 d-flex gap-2">
