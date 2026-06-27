@@ -20,7 +20,13 @@
                 <option value="<?= e($g) ?>" <?= request('genre') === $g ? 'selected' : '' ?>><?= e($g) ?></option>
             @endforeach
         </select>
-        <button class="btn btn-sm btn-buy" type="submit">Фильтр</button>
+        <select name="sort" class="form-select form-select-sm">
+            <option value="" <?= request('sort') === null || request('sort') === '' ? 'selected' : '' ?>>Сначала новые</option>
+            <option value="price_asc" <?= request('sort') === 'price_asc' ? 'selected' : '' ?>>Цена: по возрастанию</option>
+            <option value="price_desc" <?= request('sort') === 'price_desc' ? 'selected' : '' ?>>Цена: по убыванию</option>
+            <option value="title" <?= request('sort') === 'title' ? 'selected' : '' ?>>По названию</option>
+        </select>
+        <button class="btn btn-sm btn-buy" type="submit">Применить</button>
     </form>
 </div>
 
@@ -39,7 +45,6 @@
             <div class="game-card">
                 <a href="<?= route('catalog.show', $game) ?>" class="game-cover <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$game->image))."')" : 'background:'.$cover($game) ?>;">
                     <span class="badge-genre"><?= e($game->genre) ?></span>
-                    <span class="game-cover-title"><?= e($game->title) ?></span>
                 </a>
                 <div class="game-body">
                     <a href="<?= route('catalog.show', $game) ?>" class="game-title"><?= e($game->title) ?></a>

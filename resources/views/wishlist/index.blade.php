@@ -17,7 +17,6 @@
                 <div class="game-card">
                     <a href="<?= route('catalog.show', $item->game) ?>" class="game-cover <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$item->game->image))."')" : 'background:linear-gradient(135deg,#2b5876,#4e4376)' ?>;">
                         <span class="badge-genre"><?= e($item->game->genre) ?></span>
-                        <span class="game-cover-title"><?= e($item->game->title) ?></span>
                     </a>
                     <div class="game-body">
                         <a href="<?= route('catalog.show', $item->game) ?>" class="game-title"><?= e($item->game->title) ?></a>

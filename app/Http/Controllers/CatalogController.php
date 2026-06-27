@@ -21,7 +21,16 @@ class CatalogController extends Controller
             $query->where('genre', $genre);
         }
 
-        $games = $query->orderByDesc('created_at')->paginate(12)->withQueryString();
+        // Сортировка (только из белого списка)
+        $sort = (string) $request->input('sort');
+        match ($sort) {
+            'price_asc' => $query->orderBy('price'),
+            'price_desc' => $query->orderByDesc('price'),
+            'title' => $query->orderBy('title'),
+            default => $query->orderByDesc('created_at'),
+        };
+
+        $games = $query->paginate(12)->withQueryString();
 
         $genres = Game::visible()
             ->select('genre')

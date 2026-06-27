@@ -13,7 +13,6 @@
     <div class="col-md-5">
         <div class="game-cover game-cover-lg <?= $hasImg ? 'has-image' : '' ?>" style="<?= $hasImg ? "background-image:url('".e(asset('storage/'.$game->image))."')" : 'background:linear-gradient(135deg, '.$pair[0].', '.$pair[1].')' ?>;">
             <span class="badge-genre"><?= e($game->genre) ?></span>
-            <span class="game-cover-title"><?= e($game->title) ?></span>
         </div>
     </div>
     <div class="col-md-7">
